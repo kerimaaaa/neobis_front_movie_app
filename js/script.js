@@ -41,8 +41,8 @@ function getClassByRate(rate) {
 function showFilms(data) {
     const movies = document.querySelector('.films-row');
 
-   const wrapper = document.querySelector('.wrapper');
-    wrapper.innerHTML = '';
+//    const wrapper = document.querySelector('.wrapper');
+//     wrapper.innerHTML = '';
 
     data.films.forEach(movie => {
         const movie_card = document.createElement('div');
@@ -200,15 +200,15 @@ function showFilmsDigital(data) {
     })
 }
 
-form.addEventListener('submit', (e)=>{
-    e.preventDefault();
-    const apiSearchUrl = `${url__search}${search.value}`
-    if(search.value){
-        getFilms(apiSearchUrl);
+// form.addEventListener('submit', (e)=>{
+//     e.preventDefault();
+//     const apiSearchUrl = `${url__search}${search.value}`
+//     if(search.value){
+//         getFilms(apiSearchUrl);
 
-        search.value ='';
-    }
-})
+//         search.value ='';
+//     }
+// })
 
 getFilmsPremier(url__premier);
 getFilms(url__top);
