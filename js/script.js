@@ -90,20 +90,32 @@ function showFilms(section, data) {
     })
 }
 
+form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const filmsTitle = document.querySelector('.films-section-title');
+    const filmsTop = document.querySelector('#film-top');
+    const filmsPremier = document.querySelector('#film-premieres');
+    const filmsAwait = document.querySelector('#film-await');
+    const filmsDigital = document.querySelector('#film-digital');
+    const digitalTitle = document.querySelector('#digitals');
+    const premiereTitle = document.querySelector('#premieres');
+    const awaitTitle = document.querySelector('#awaits');
 
+    const apiSearchUrl = `${url__search}${search.value}`;
+    if (search.value) {
+        getFilms(apiSearchUrl);
 
-
-
-
-// form.addEventListener('submit', (e)=>{
-//     e.preventDefault();
-//     const apiSearchUrl = ${url__search}${search.value}
-//     if(search.value){
-//         getFilms(apiSearchUrl);
-
-//         search.value ='';
-//     }
-// })
+        search.value = '';
+        filmsTitle.innerHTML = '';
+        filmsTop.innerHTML = '';
+        filmsPremier.innerHTML = '';
+        filmsAwait.innerHTML = '';
+        filmsDigital.innerHTML = '';
+        digitalTitle.innerHTML = '';
+        awaitTitle.innerHTML = '';
+        premiereTitle.innerHTML = '';
+    }
+});
 
 getFilmsPremiere(url__premier);
 getFilms(url__top);
