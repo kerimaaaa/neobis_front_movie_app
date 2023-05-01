@@ -23,8 +23,34 @@ async function getFilms(url) {
             "X-API-KEY": API_key,
         },
     });
-    const responseData = await response.json();
-    showFilms(responseData);
+    const responseData =  response.json;
+return responseData;
+}
+
+
+
+
+async function getFilms(url) {
+
+    const response = await fetchMovies(url)
+    showFilms('top', response.films);
+
+}
+async function getFilmsPremiere(url) {
+    const response = await fetchMovies(url)
+    showFilms('premieres', response.items);
+}
+
+
+async function getFilmsAwait(url) {
+    const response = await fetchMovies(url)
+    showFilms('await', response.films);
+
+}
+
+async function getFilmsDigital(url) {
+    const response = await fetchMovies(url)
+    showFilms('digital', response.releases);
 
 }
 
@@ -38,13 +64,11 @@ function getClassByRate(rate) {
     }
 }
 
-function showFilms(data) {
-    const movies = document.querySelector('.films-row');
 
-//    const wrapper = document.querySelector('.wrapper');
-//     wrapper.innerHTML = '';
+function showFilms(section, data) {
+    const movies = document.querySelectorAll('#film-'+section);
 
-    data.films.forEach(movie => {
+    data.forEach(movie => {
         const movie_card = document.createElement('div');
         movie_card.classList.add('films-card')
         movie_card.innerHTML = `
@@ -68,131 +92,6 @@ function showFilms(data) {
                 </div>
                 <div class="film-year">
                 <p>${movie.year}</p>
-            </div>
-                `;
-        movies.appendChild(movie_card);
-
-    })
-}
-async function getFilmsPremier(url) {
-    const response = await fetch(url, {
-        headers: {
-            "Content-Type": "application/json",
-            "X-API-KEY": API_key,
-        },
-    });
-    const responseData = await response.json();
-
-    showFilmsPremier(responseData);
-}
-
-function showFilmsPremier(movies) {
-    const moviesPremier = document.querySelector('.films-row-premier');
-
-    movies.items.forEach(movie => {
-        const movie_card = document.createElement('div');
-        movie_card.classList.add('films-card')
-        movie_card.innerHTML = `
-        <div class="film-cover">
-                    <img alt="${movie.nameRu}" class="film-img"
-                        src="${movie.posterUrlPreview}">
-                </div>
-               
-                <div class="film-title">
-                    <h3>${movie.nameRu}</h3>
-                </div>
-                <div class="film-genre">
-                    <p>${movie.genres.map((genre) => ` ${genre.genre}`)}</p>
-                </div>
-                <div class="film-year">
-                <p>${movie.premiereRu}</p>
-            </div>
-                `;
-        moviesPremier.appendChild(movie_card);
-
-    })
-}
-
-async function getFilmsAwait(url) {
-    const response = await fetch(url, {
-        headers: {
-            "Content-Type": "application/json",
-            "X-API-KEY": API_key,
-        },
-    });
-    const responseData = await response.json();
-    showFilmsAwait(responseData);
-
-}
-function showFilmsAwait(data) {
-    const movies = document.querySelector('.films-row-await');
-    data.films.forEach(movie => {
-        const movie_card = document.createElement('div');
-        movie_card.classList.add('films-card')
-        movie_card.innerHTML = `
-        <div class="film-cover">
-                    <img alt="${movie.nameRu}" class="film-img"
-                        src="${movie.posterUrlPreview}">
-                </div>
-                ${movie.rating &&
-            `
-                <div class="film-rating film-average-${getClassByRate(movie.rating)}">
-                    <p>${movie.rating}</p>
-                </div>
-
-                `
-            }
-                <div class="film-title">
-                    <h3>${movie.nameRu}</h3>
-                </div>
-                <div class="film-genre">
-                    <p>${movie.genres.map((genre) => ` ${genre.genre}`)}</p>
-                </div>
-                <div class="film-year">
-                <p>${movie.year}</p>
-            </div>
-                `;
-        movies.appendChild(movie_card);
-
-    })
-}
-async function getFilmsDigital(url) {
-    const response = await fetch(url, {
-        headers: {
-            "Content-Type": "application/json",
-            "X-API-KEY": API_key,
-        },
-    });
-    const responseData = await response.json();
-    showFilmsDigital(responseData);
-
-}
-function showFilmsDigital(data) {
-    const movies = document.querySelector('.films-row-digital');
-    data.releases.forEach(movie => {
-        const movie_card = document.createElement('div');
-        movie_card.classList.add('films-card')
-        movie_card.innerHTML = `
-        <div class="film-cover">
-                    <img alt="${movie.nameRu}" class="film-img"
-                        src="${movie.posterUrlPreview}">
-                </div>
-                ${movie.rating &&
-                    `
-                        <div class="film-rating film-average-${getClassByRate(movie.rating)}">
-                            <p>${movie.rating}</p>
-                        </div>
-        
-                        `
-                    }
-                <div class="film-title">
-                    <h3>${movie.nameRu}</h3>
-                </div>
-                <div class="film-genre">
-                    <p>${movie.genres.map((genre) => ` ${genre.genre}`)}</p>
-                </div>
-                <div class="film-year">
-                <p>${movie.releaseDate}</p>
             </div>
                 `;
         movies.appendChild(movie_card);
@@ -210,7 +109,7 @@ function showFilmsDigital(data) {
 //     }
 // })
 
-getFilmsPremier(url__premier);
+getFilmsPremiere(url__premier);
 getFilms(url__top);
 getFilmsAwait(url__await);
 getFilmsDigital(url__digital);
