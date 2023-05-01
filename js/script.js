@@ -16,14 +16,14 @@ const searchBtn = document.querySelector('.search-btn');
 
 
 
-async function getFilms(url) {
+async function fetchMovies(url){
     const response = await fetch(url, {
         headers: {
             "Content-Type": "application/json",
             "X-API-KEY": API_key,
         },
     });
-    const responseData =  response.json;
+    const responseData = await response.json;
 return responseData;
 }
 
