@@ -10,25 +10,16 @@ const search = document.querySelector('#search');
 const searchBtn = document.querySelector('.search-btn');
 
 
-
-
-
-
-
-
-async function fetchMovies(url){
+async function fetchMovies(url) {
     const response = await fetch(url, {
         headers: {
             "Content-Type": "application/json",
             "X-API-KEY": API_key,
         },
     });
-    const responseData = await response.json;
-return responseData;
+    const responseData = await response.json();
+    return responseData;
 }
-
-
-
 
 async function getFilms(url) {
 
@@ -64,44 +55,49 @@ function getClassByRate(rate) {
     }
 }
 
-
 function showFilms(section, data) {
     const movies = document.querySelector('#film-'+section);
-
+    if (!data || data.length === 0) {
+        console.log('No data about this film');
+        return;
+    }
     data.forEach(movie => {
         const movie_card = document.createElement('div');
         movie_card.classList.add('films-card')
         movie_card.innerHTML = `
-        <div class="film-cover">
-                    <img alt="${movie.nameRu}" class="film-img"
-                        src="${movie.posterUrlPreview}">
-                </div>
-                ${movie.rating &&
-                    `
-                        <div class="film-rating film-average-${getClassByRate(movie.rating)}">
-                            <p>${movie.rating}</p>
-                        </div>
-        
-                        `
-                    }
-                <div class="film-title">
-                    <h3>${movie.nameRu}</h3>
-                </div>
-                <div class="film-genre">
-                    <p>${movie.genres.map((genre) => ` ${genre.genre}`)}</p>
-                </div>
-                <div class="film-year">
+            <div class="film-cover">
+                <img alt="${movie.nameRu}" class="film-img"
+                    src="${movie.posterUrlPreview}">
+            </div>
+            ${movie.rating &&
+                `
+                    <div class="film-rating film-average-${getClassByRate(movie.rating)}">
+                        <p>${movie.rating}</p>
+                    </div>
+                `
+            }
+            <div class="film-title">
+                <h3>${movie.nameRu}</h3>
+            </div>
+            <div class="film-genre">
+                <p>${movie.genres.map((genre) => ` ${genre.genre}`)}</p>
+            </div>
+            <div class="film-year">
                 <p>${movie.year}</p>
             </div>
-                `;
+        `;
         movies.appendChild(movie_card);
-
     })
 }
 
+
+
+
+
+
 // form.addEventListener('submit', (e)=>{
 //     e.preventDefault();
-//     const apiSearchUrl = `${url__search}${search.value}`
+//     const apiSearchUrl = ${url__search}${search.value}
 //     if(search.value){
 //         getFilms(apiSearchUrl);
 
