@@ -95,37 +95,8 @@ button {
     margin-right: 20px;
 
 }
-.films-row-premier{
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    height: auto;
-    box-sizing: border-box;
-    margin-left: 70px;
-    justify-content: space-around;
-    margin-right: 20px;
-}
-.films-row-digital{
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    height: auto;
-    box-sizing: border-box;
-    margin-left: 70px;
-    justify-content: space-around;
-    margin-right: 20px;
-}
-.films-row-await{
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    height: auto;
-    box-sizing: border-box;
-    margin-left: 70px;
-    justify-content: space-around;
-    margin-right: 20px; 
-}
-.films-section-name {
+
+.films-section-title {
     margin: 20px 80px 15px;
     font-size: 22px;
     color: #fff;
