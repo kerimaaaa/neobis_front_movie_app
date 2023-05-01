@@ -66,7 +66,7 @@ function getClassByRate(rate) {
 
 
 function showFilms(section, data) {
-    const movies = document.querySelectorAll('#film-'+section);
+    const movies = document.querySelector('#film-'+section);
 
     data.forEach(movie => {
         const movie_card = document.createElement('div');
