@@ -77,7 +77,25 @@ button {
     cursor: pointer;
 }
 
-
+.favoriteFilms{
+    margin-top: 40px;
+    margin-left: 500px;
+}
+.favoriteFilms h3{
+    color: #fff;
+    font-size: 24px;
+    cursor: pointer;
+}
+.favoriteFilms h3:hover{
+color: #adaaaa;
+}
+.fav_btn{
+    border-radius: 50%;
+    background-color: #1a191f;
+}
+.fav_btn:hover {
+    color: red;
+}
 
 .films__container {
     max-width: 1200px;
