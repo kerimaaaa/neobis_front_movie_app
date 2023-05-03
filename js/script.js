@@ -57,10 +57,7 @@ function getClassByRate(rate) {
 
 function showFilms(section, data) {
     const movies = document.querySelector('#film-'+section);
-    if (!data || data.length === 0) {
-        console.log('No data about this film');
-        return;
-    }
+
     data.forEach(movie => {
         const movie_card = document.createElement('div');
         movie_card.classList.add('films-card')
@@ -85,9 +82,26 @@ function showFilms(section, data) {
             <div class="film-year">
                 <p>${movie.year}</p>
             </div>
+            <div class="film__heart"><button data-id="${movie.filmId}"  class="fav_btn" id="btns">
+            <i class="fa-regular fa-heart"></i></button></div>
         `;
         movies.appendChild(movie_card);
     })
+    const favoriteBtn = document.querySelector('#btns')
+    favoriteBtn.forEach(item => {item.addEventListener("click", ()=>{
+        if (favoriteFilms.some(movie => movie.filmId == item.dataset.id)){
+            favoriteFilms = favoriteFilms.filter(movie => movie.filmId != item.dataset.id)
+        } else {
+            favoriteFilms = [...favoriteFilms, item.find(movie => movie.filmId == item.dataset.id)]
+        }
+        createLocalStorage();
+    })})
+}
+function createLocalStorage() {
+    localStorage.setItem('favorites', JSON.stringify(favoriteFilms));
+}
+function showFavFilms() {
+    favorites.innerHTML = localStorage.getItem('favorites');
 }
 
 form.addEventListener('submit', (e) => {
