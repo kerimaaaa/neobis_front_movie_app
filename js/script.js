@@ -9,7 +9,6 @@ const form = document.querySelector('form');
 const search = document.querySelector('#search');
 const searchBtn = document.querySelector('.search-btn');
 const favSection = document.querySelector('#favorites');
-let favorites = []
 
 
 
@@ -59,59 +58,21 @@ function getClassByRate(rate) {
         return "red";
     }
 }
-favSection.addEventListener("click", (e)=> {
-    e.preventDefault();
-    
-    const movies = document.querySelector('#film-top');
-    search.value = '';
-    filmsTitle.innerHTML = '';
-    filmsTop.innerHTML = '';
-    filmsPremier.innerHTML = '';
-    filmsAwait.innerHTML = '';
-    filmsDigital.innerHTML = '';
-    digitalTitle.innerHTML = '';
-    awaitTitle.innerHTML = '';
-    premiereTitle.innerHTML = '';
-    favorites.forEach(movie => {
-        const movie_card = document.createElement('div');
-        movie_card.classList.add('films-card')
-        movie_card.innerHTML = `
-            <div class="film-cover">
-                <img alt="${movie.nameRu}" class="film-img"
-                    src="${movie.posterUrlPreview}">
-            </div>
-            ${movie.rating &&
-            ` <div class="film-rating film-average-${getClassByRate(movie.rating)}">
-                        <p class='ratings'>${movie.rating}</p>
-                    </div>
-              `}
-            <div class="film-title">
-                <h3>${movie.nameRu}</h3>
-            </div>
-            <div class="film-genre">
-                <p>${movie.genres.map((genre) => ` ${genre.genre}`)}</p>
-            </div>
-            <div class="film-year">
-                <p>${movie.year}</p>
-            </div>
-            <div class="film__heart"><button data-id="${movie.filmId}"  class="fav_btn" id="btns">
-            <i class="fa-regular fa-heart"></i></button></div>
-        `;
-        movies.appendChild(movie_card);
-    })
-const favoriteBtns = document.querySelectorAll('.fav_btn')
-    for(let i =0; i < favoriteBtns.length; i++){
-        favoriteBtns[i].addEventListener('click', function(){
-            if (favorites.some(movie => movie.filmId == favoriteBtns[i].dataset.id)){
-                favorites = favorites.filter(movie => movie.filmId != favoriteBtns[i].dataset.id)
-            } else {
-                favorites = [...favorites, favoriteBtns[i].find(el => el.filmId == favoriteBtns[i].dataset.id)]
-            } 
-            localStorage.setItem('favorites', JSON.stringify(favorites))
-        })
-    }
-})
 
+let favoriteMovies = JSON.parse(localStorage.getItem("favoriteMovies")) || [];
+
+function handleFavorite(movieId, heartButton) {
+    const index = favoriteMovies.findIndex(movie => movie.id === movieId);
+    if (index >= 0) {
+        favoriteMovies.splice(index, 1);
+        heartButton.style.color = "white";
+    } else {
+        favoriteMovies.push({ id: movieId });
+        heartButton.style.color = "red";
+    }
+
+    localStorage.setItem("favoriteMovies", JSON.stringify(favoriteMovies));
+}
 
 function showFilms(section, data) {
     const movies = document.querySelector('#film-' + section);
@@ -138,44 +99,37 @@ function showFilms(section, data) {
             <div class="film-year">
                 <p>${movie.year}</p>
             </div>
-            <div class="film__heart"><button data-id="${movie.filmId}"  class="fav_btn" id="btns">
-            <i class="fa-regular fa-heart"></i></button></div>
+
         `;
+        const filmFavorite = document.createElement("div");
+        filmFavorite.classList.add('film__heart');
+        movie_card.appendChild(filmFavorite);
+        const heartButton = document.createElement("button");
+        heartButton.classList.add('fav_btn');
+        filmFavorite.appendChild(heartButton);
+        const icon = document.createElement('i');
+        icon.classList.add('fa-regular');
+        icon.classList.add('fa-heart');
+        heartButton.appendChild(icon);
+        heartButton.dataId = movie.filmId;
+        heartButton.style.color = favoriteMovies.find(favoriteMovie => favoriteMovie.id === movie.filmId) ? "red" : "white";
+        heartButton.addEventListener("click", () => handleFavorite(movie.filmId, heartButton));
         movies.appendChild(movie_card);
     })
-    const favoriteBtns = document.querySelectorAll('.fav_btn')
-    for(let i =0; i < favoriteBtns.length; i++){
-        favoriteBtns[i].addEventListener('click', function(){ 
-            if (favorites.some(movie => movie.filmId == favoriteBtns[i].dataset.id)){
-                favorites = favorites.filter(movie => movie.filmId != favoriteBtns[i].dataset.id)
-            } else {
-                favorites = [...favorites]
-            } 
-            localStorage.setItem('favorites', JSON.stringify(favorites))
-        })
-    }
-    
 }
-
-function getItems(){
-    favorites = JSON.parse(localStorage.getItem('favorites')) || [];
-}
-
-
-
 
 const filmsTitle = document.querySelector('.films-section-title');
-    const filmsTop = document.querySelector('#film-top');
-    const filmsPremier = document.querySelector('#film-premieres');
-    const filmsAwait = document.querySelector('#film-await');
-    const filmsDigital = document.querySelector('#film-digital');
-    const digitalTitle = document.querySelector('#digitals');
-    const premiereTitle = document.querySelector('#premieres');
-    const awaitTitle = document.querySelector('#awaits');
+const filmsTop = document.querySelector('#film-top');
+const filmsPremier = document.querySelector('#film-premieres');
+const filmsAwait = document.querySelector('#film-await');
+const filmsDigital = document.querySelector('#film-digital');
+const digitalTitle = document.querySelector('#digitals');
+const premiereTitle = document.querySelector('#premieres');
+const awaitTitle = document.querySelector('#awaits');
 
 form.addEventListener('submit', (e) => {
     e.preventDefault();
-    
+
 
     const apiSearchUrl = `${url__search}${search.value}`;
     if (search.value) {
