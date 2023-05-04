@@ -145,7 +145,12 @@ color: #adaaaa;
     font-size: 14px;
     color: #fff;
 }
-
+.film__heart{
+    position: absolute;
+z-index: 1;
+margin-top: -60px;
+margin-left: 200px;
+}
 .film-img {
     width: 240px;
     height: 300px;
