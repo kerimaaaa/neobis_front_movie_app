@@ -8,7 +8,8 @@ const filmCover = document.querySelector('.film-cover');
 const form = document.querySelector('form');
 const search = document.querySelector('#search');
 const searchBtn = document.querySelector('.search-btn');
-
+const favoriteFims = document.querySelector('.favoriteFilms');
+const favorites = [];
 
 async function fetchMovies(url) {
     const response = await fetch(url, {
@@ -87,18 +88,10 @@ function showFilms(section, data) {
         `;
         movies.appendChild(movie_card);
     })
-    const favoriteBtn = document.querySelector('#btns')
-    favoriteBtn.forEach(item => {item.addEventListener("click", ()=>{
-        if (favoriteFilms.some(movie => movie.filmId == item.dataset.id)){
-            favoriteFilms = favoriteFilms.filter(movie => movie.filmId != item.dataset.id)
-        } else {
-            favoriteFilms = [...favoriteFilms, item.find(movie => movie.filmId == item.dataset.id)]
-        }
-        createLocalStorage();
-    })})
-}
-function createLocalStorage() {
-    localStorage.setItem('favorites', JSON.stringify(favoriteFilms));
+    const favoriteBtns = document.querySelector('#btns')
+    for(let i=0; i< favoritebtns.length; i++){
+       favorites.push(favoritebtns[i].dateset)
+         localStorage.setItem('favorites', JSON.stringify(favorites));
 }
 function showFavFilms() {
     favorites.innerHTML = localStorage.getItem('favorites');
