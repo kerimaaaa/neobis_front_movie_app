@@ -8,9 +8,8 @@ const filmCover = document.querySelector('.film-cover');
 const form = document.querySelector('form');
 const search = document.querySelector('#search');
 const searchBtn = document.querySelector('.search-btn');
-const favoriteFims = document.querySelector('.favoriteFilms');
-const favorites = [];
-
+const favSection = document.querySelector('#favorites')
+const favorites = []
 async function fetchMovies(url) {
     const response = await fetch(url, {
         headers: {
@@ -94,7 +93,7 @@ function showFilms(section, data) {
          localStorage.setItem('favorites', JSON.stringify(favorites));
 }
 function showFavFilms() {
-    favorites.innerHTML = localStorage.getItem('favorites');
+    favorites.innerHTML = localStorage.getItem('favorites') ||[];
 }
 
 form.addEventListener('submit', (e) => {
