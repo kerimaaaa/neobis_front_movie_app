@@ -4,7 +4,6 @@ const url__await = 'https://kinopoiskapiunofficial.tech/api/v2.2/films/top?type=
 const url__digital = 'https://kinopoiskapiunofficial.tech/api/v2.1/films/releases?year=2023&month=APRIL&page=1';
 const url__search = 'https://kinopoiskapiunofficial.tech/api/v2.1/films/search-by-keyword?keyword=';
 const API_key = 'dd519481-2d52-40d4-a685-866db3c05a7e';
-const filmCover = document.querySelector('.film-cover');
 const form = document.querySelector('form');
 const search = document.querySelector('#search');
 
