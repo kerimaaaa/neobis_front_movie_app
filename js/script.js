@@ -7,8 +7,6 @@ const API_key = 'dd519481-2d52-40d4-a685-866db3c05a7e';
 const filmCover = document.querySelector('.film-cover');
 const form = document.querySelector('form');
 const search = document.querySelector('#search');
-const searchBtn = document.querySelector('.search-btn');
-const favSection = document.querySelector('#favorites');
 
 
 
